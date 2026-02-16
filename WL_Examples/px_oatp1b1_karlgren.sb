@@ -1,0 +1,36 @@
+#!/bin/bash
+#SBATCH --job-name=oatp1b1_karlgren
+#SBATCH --output=/mnt/home/aljetsal/protenix/outputs/logs/screen_%a.out
+#SBATCH --array=0-226%50
+#SBATCH --time=04:00:00
+#SBATCH --partition=gpu
+#SBATCH --gres=gpu:1
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=64G
+
+# 1. Setup
+module purge
+module load CUDA/12.4.0
+module load Miniforge3
+source activate px
+
+#export LAYERNORM_TYPE=torch
+#export TRITON_CACHE_DIR=/mnt/home/aljetsal/protenix/outputs/triton_cache
+#mkdir -p $TRITON_CACHE_DIR
+
+# 2. Select the specific file for this task
+# SLURM_ARRAY_TASK_ID will be 0, then 1, then 2...
+INPUT_FILE="/mnt/home/aljetsal/protenix/inputs/karlgren_JSON_batch/drug_${SLURM_ARRAY_TASK_ID}.json"
+OUTPUT_DIR="/mnt/home/aljetsal/protenix/outputs/px_oatp1b1_karlgren_results/drug_${SLURM_ARRAY_TASK_ID}"
+
+echo "Processing file: $INPUT_FILE"
+echo "Outputting to: $OUTPUT_DIR"
+
+# 3. Run Protenix
+# Note: "predict" is now "pred"
+
+protenix pred \
+  --input $INPUT_FILE \
+  --out_dir $OUTPUT_DIR \
+  --seeds 101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120 \
+  --model_name protenix_base_20250630_v1.0.0

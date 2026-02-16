@@ -1,0 +1,25 @@
+#!/bin/bash
+#SBATCH --job-name=oatp_rosu
+#SBATCH --output=/mnt/home/aljetsal/protenix/outputs/logs/run_%j.out
+#SBATCH --time=04:00:00
+#SBATCH --partition=gpu
+#SBATCH --gres=gpu:1
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=64G
+
+# 1. Setup Environment
+module purge
+module load CUDA/12.4.0
+module load Miniforge3
+source activate px
+
+# 2. Run Protenix
+# STRICTLY use these flags only.
+# --input (instead of --input_json_path)
+# --out_dir (instead of --dump_dir)
+
+protenix predict \
+  --input /mnt/home/aljetsal/protenix/inputs/oatp1b1_rosu_protenix.json \
+  --out_dir /mnt/home/aljetsal/protenix/outputs/oatp1b1_rosu \
+  --seeds 101,102 \
+  --model_name protenix_base_default_v1.0.0
