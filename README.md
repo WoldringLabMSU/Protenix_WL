@@ -26,7 +26,7 @@ source activate px
 ### **2. Download Protenix from the WL GitHub**
 
 ```bash
-pip install "git+[https://github.com/WoldringLabMSU/Protenix_WL.git](https://github.com/WoldringLabMSU/Protenix_WL.git)"
+pip install "git+https://github.com/WoldringLabMSU/Protenix_WL.git"
 ```
 
 ### **3. Prepare JSON files**
