@@ -1,3 +1,57 @@
+# Woldring Lab Protenix Workflow
+## Brief Guide to Running Protenix
+**Alex Aljets** | Last updated 2/9/2026
+
+[Original Protenix Repo](https://github.com/bytedance/Protenix) | [Woldring Lab Protenix Repo](https://github.com/WoldringLabMSU/Protenix_WL#)
+
+---
+
+### **1. Make a virtual environment for Protenix**
+
+```bash
+# 1. Clear out the failed attempts
+module purge
+
+# 2. Load the new "Conda" module (it's called Miniforge3 now)
+module load Miniforge3
+
+# 3. Create your environment (if you haven't already)
+# Note: If it asks, type 'y' to proceed.
+conda create -n px python=3.11
+
+# 4. Activate it
+source activate px
+```
+
+### **2. Download Protenix from the WL GitHub**
+
+```bash
+pip install "git+[https://github.com/WoldringLabMSU/Protenix_WL.git](https://github.com/WoldringLabMSU/Protenix_WL.git)"
+```
+
+### **3. Prepare JSON files**
+
+All scripts in steps 3 and 4 are located in the `WL_examples` folder in the WL GitHub.
+
+* For one protein-ligand simulation, you can make it yourself. My template for that is titled `oatp1b1_rosu_protenix.json`.
+* For batch simulations, it is more efficient to create them with a python script. My template for that is titled `px_karlgren1b1_json.py`.
+
+You will need to create an excel file/csv with the names (`pdb_id`) and SMILES (`smiles`). Also make sure to specify input and output directories. Run the script with:
+
+```bash
+python3 px_karlgren1b1_json.py
+```
+
+### **4. Run sbatch script**
+
+* For one protein-ligand simulation, work off the `px_oatp1b1_rosu.sb` script.
+* For batch simulations, work off the `px_oatp1b1_karlgren.sb` script. The main difference is using an array to change the input and output.
+
+To create more or less simulations, change the number of seeds. There will be 5 files created per seed.
+
+--- Original README ----
+
+
 # Protenix: Protein + X
 
 
